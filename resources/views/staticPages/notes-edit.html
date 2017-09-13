@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jumping Notes</title>
+	 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,600i,700,700i,800,900,900i">
+    <!-- Bootstrap -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="css/style.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css">
+
+  </head>
+  <body class="course">
+
+  <!-- NAVIGATION START -->
+  
+<nav class=" main-nav navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+   	 <a class="navbar-brand logo" href="index.html"><img src="images/j_logo.png" alt=""/></a>
+    </div>
+    <div class="collapse navbar-collapse " id="myNavbar">
+      <ul class="nav navbar-nav nav-right navbar-right">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Profile</a></li>
+		<li><a href="#">Transaction</a></li>
+		<li><a href="#">Notes</a></li>
+        <li><a href="#">Login / Sign Up</a></li>
+      </ul>
+   
+    </div>
+  </div>
+</nav>
+
+	<!-- NAVIGATION END  -->
+	
+	
+		<!-- / NOTES BANNER  -->
+	
+<div class="container-fluid text-center banner-text">
+  <h3>NOTES</h3>
+</div>
+
+
+
+	<!-- / SEARCH NOTES BLOCK -->
+
+<div class="meet-with">
+<div class="container-fluid">
+
+
+	<div class="col-md-12">
+    <div class="col-lg-12 col-sm-12 col-md-12 upload-file">
+            	<div class="row" id="fileupload">
+                	<div class="no-marg-top">Upload your notes to the #1 marketplace for students notes </div>
+                    <div class="addnewnote"><button id="addnew" type="button" data-toggle="modal" data-target="#myModal">Add New Note</button></div>
+                 </div>
+            </div>
+    	
+
+
+<div id="newNotes">
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add New Notes</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="notes_form" method="post" role="form" action="http://110.37.221.34:7777/jumpnotes/rod/notes">
+                    <div class="row">
+                    	<div class="form-group note-title col-md-6">
+         					<h4 class="no-marg-top no-marg-bottom">Note Title </h4>
+        				</div>
+                        <div class="form-group note-title col-md-6">
+                        <span style="color:red" class="note_title"></span>
+         					<input type="text" name="note_title" class="form-control" id="note_title" placeholder="Note Title">
+        				</div>
+                        <div class="form-group upload-notes col-md-6">
+         					<h4 class="no-marg-top no-marg-bottom">Upload Notes </h4>
+        				</div>
+                        <div class="form-group upload-notes col-md-6">
+                        <input type="hidden" name="notes_id" value="0">
+         					<input type="file" name="note_file[]" multiple/>
+        				</div>
+                        <div class="form-group note-rel-subj col-md-6">
+         					<h4 class="no-marg-top no-marg-bottom">Note Related Subject: </h4>
+        				</div>
+                        <div class="form-group note-rel-subj col-md-6">
+         					<input type="text" name="note_subject" class="form-control" id="note_subject" placeholder="example : Mathematics">
+        				</div>
+                        <div class="form-group class-level col-md-6">
+         					<h4 class="no-marg-top no-marg-bottom">Class Level : </h4>
+        				</div>
+                        <div class="form-group class-level col-md-6">
+         					<input type="text" name="note_class" class="form-control" id="note_class" placeholder="Example : 3rd Semester">
+        				</div>
+                        <div class="form-group notes-detail col-md-6">
+         					<h4 class="no-marg-top no-marg-bottom">Notes Detail : </h4>
+        				</div>
+                        <div class="form-group notes-edit-detail col-md-6">
+                        <span style="color:red" class="note_detail"></span>
+         					<textarea type="text" name="note_detail" rows="3" /></textarea>
+        				</div>
+                        <div class="form-group notes-edit-detail col-md-6 ">
+         					&nbsp;
+        				</div>
+                        <div class="form-group notes-detail col-md-6 ">
+         					<input type="submit" class="btn btn-primary pull-right" value="submit"/>
+        				</div>
+                        
+                        
+                        
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        
+    </div>
+    </div>
+    </div>
+</div>
+
+
+
+ <!-- / FIRST ROW -->
+
+<div class="first-row">
+
+<div class="col-md-12">
+	<h3>Your Notes</h3>
+</div>
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 1</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+    <div class="overlay"></div>
+  		<div class="button left-button"><a href="#">
+        	<i class="fa fa-pencil fa-fw fa-2x"></i>
+        </a></div>
+        <div class="button right-button"><a href="#a">
+        	<i class="fa fa-trash-o fa-fw fa-2x"></i>
+        </a></div>
+        
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+
+
+
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 2</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 3</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 3</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 3</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 3</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 1</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+
+
+
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 2</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 3</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 3</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 3</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 main-text col-md-offset-0">
+<div class="pos-left details detail-home">
+<div class="desc-dv title views-no col-md-12">
+    <h2><a href="#">Note 3</a></h2>
+</div>
+<div class="pull-left col-md-12 file-ico">
+    <img src="images/notes1.jpg">
+</div>
+
+<div class="desc-dv title-desc col-md-12">
+	<h4>Auhor : Dr Adel</h4>
+    <p>Subject : English</p>
+	 </div>
+     <div class="desc-dv edit title-desc col-md-12">
+		<div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">View</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Edit</a></h4>
+        </div>
+        <div class="col-md-4 no-pad-left no-pad-right">
+        	<h4><a href="#">Delete</a></h4>
+        </div>
+	 </div>
+     <div class="desc-dv views-no  col-md-12 col-sm-12 col-xs-12">
+	No of View: 10
+    
+    </div>
+    
+</div>
+
+</div>
+
+
+
+</div>
+
+
+<!-- FIRST BLOCK END -->
+
+
+
+
+
+ 
+ 
+
+	
+	 
+	
+	
+
+	
+</div>	
+</div>
+
+   <!-- SEARCH NOTES BLOCK  END-->
+
+
+<!-- FOOTER BLOCK -->
+
+<footer>
+<div class="footer-nav">
+<div class="container">
+<nav class="navbar footer-navi navbar-left">
+    <ul class="nav navbar-nav">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Profile</a></li>
+		<li><a href="#">Transaction</a></li>
+		<li><a href="#">Notes</a></li>
+        <li><a href="#">Login / Sign Up</a></li>
+    </ul>
+</nav>
+
+
+<div class="social-icons pull-right">
+     <a href="https://www.facebook.com/bootsnipp"><i class="fa fa-facebook-square fa-3x social"></i></a>
+	 <a href="https://twitter.com/bootsnipp"><i class="fa fa-twitter-square fa-3x social"></i></a>
+	 <a href="#"><i class="fa fa-instagram fa-3x social"></i></a> 
+	 <a href="#"><i class="fa fa-linkedin-square fa-3x social"></i></a>
+     <a href="#"><i class="fa fa-rss-square fa-3x social"></i></a>	 
+	 <a href="https://plus.google.com/+Bootsnipp-page"><i class="fa fa-google-plus-square fa-3x social"></i></a>
+	 
+
+</div>
+</div>
+</div>
+
+
+<div class="copyright">
+<div class="container">
+
+<div class="pull-left right-rev">
+<p>All rights Reserved © 2017 Learning</p>
+</div>
+<div class="pull-right design-deve">
+<p>Designed & Developed by <a href="startupbug.net">Startupbug.net</a></p>
+</div>
+</div>
+
+</div>
+</footer>
+		
+	
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+  </body>
+</html>

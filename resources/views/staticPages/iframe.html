@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+
+<iframe src="http://site.startupbug.net:6999/jumpnotes/rod/notes" width="100%" height="600px" name="asd">
+</iframe><br/>
+<div id="sub">sub</div><br/><br/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(e) {
+    $('#sub').click(function(){
+        $("iframe html body footer .footer-logo").css({"display":"none"});
+    });
+
+    $('#sub').click();
+});
+
+jQuery(document).load(function(){
+    jQuery('div.footer-logo', frames['asd']).hide();
+});
+</script>
+<a class="navbar-brand footer-logo" href="http://site.startupbug.net:6999/jumpnotes/rod"><img src="http://site.startupbug.net:6999/jumpnotes/rod/public/dynamic_assets/1495873280-j_logo.png" alt=""></a>
+</body>
+</html>

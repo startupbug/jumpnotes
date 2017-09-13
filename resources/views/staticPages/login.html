@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jumping Notes</title>
+	 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,600i,700,700i,800,900,900i">
+    <!-- Bootstrap -->
+    
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="css/style.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+  </head>
+  <body class="transaction">
+
+  <!-- NAVIGATION START -->
+  
+<nav class=" main-nav navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+   	 <a class="navbar-brand logo" href="index.html"><img src="images/j_logo.png" alt=""/></a>
+    </div>
+    <div class="collapse navbar-collapse " id="myNavbar">
+      <ul class="nav navbar-nav nav-right navbar-right">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Profile</a></li>
+		<li><a href="#">Transaction</a></li>
+		<li><a href="#">Notes</a></li>
+        <li><a href="#">Login / Sign Up</a></li>
+      </ul>
+   
+    </div>
+  </div>
+</nav>
+
+	<!-- NAVIGATION END  -->
+	
+	
+		<!-- / Transaction Text  -->
+	
+<div class="container-fluid text-center trans-text">
+  <h3>Signup / Login</h3>
+</div>
+
+
+
+	  <div class="container">
+          <!--signup-->
+    <div class="col-md-5">
+    <div id="logbox" class="signup">
+      <form id="signup" method="post" action="/signup" class="form-horizontal">
+        <h1>Create an account</h1>
+       
+        <div class="form-group user-name col-md-12">
+        	<label class="control-label col-lg-3">Email</label>
+        	<div class="col-lg-9">
+        	 <input type="text" class="form-control" id="email" placeholder="Email">
+         	</div>
+        </div>
+        <div class="form-group user-name col-md-12">
+        	<label class="control-label col-lg-3">Username</label>
+        	<div class="col-lg-9">
+         		<input type="text" class="form-control" id="username" placeholder="Username">
+        	</div>
+        </div>
+        <div class="form-group user-name col-md-12">
+        	<label class="control-label col-lg-3">Password</label>
+        	<div class="col-lg-9">
+         		<input type="text" class="form-control" id="password" placeholder="Password">
+        	</div>
+        </div>
+        <div class="form-group user-name col-md-12">
+        	<label class="control-label col-lg-3">Confrim Password</label>
+        	<div class="col-lg-9">
+         		<input type="text" class="form-control" id="cpassword" placeholder="Confirm Password">
+        	</div>
+        </div>
+        <div class="form-group sel-box country col-md-12">
+        	<label class="control-label col-lg-3">Institute</label>
+            <div class="col-lg-9">
+                <select class="form-control">
+                    <option>Institute 1</option>
+					<option>Institute 2</option>
+					<option>Institute 3</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+        	<div class="col-md-3">&nbsp;</div>
+        	<div class="col-md-9">
+            	<a href="#" class="btn btn-primary sends">Signup </span></a>
+        	</div>
+        </div>
+         <div class="form-group col-md-12">
+        	<div class="col-md-3">&nbsp;</div>
+        	<div class="col-md-9">
+            	<h4>Already have an account, <a href="#">Login</a></h4>
+        	</div>
+        </div>
+        
+      </form>
+    </div>
+   </div>
+    <!--col-md-6-->
+    
+    <div class="col-md-2">
+    <div class="wrapper">
+    <div class="line"></div>
+    <div class="wordwrapper">
+        <div class="word">or</div>                                        
+    </div>
+</div>
+    </div>
+    <!--signin-->
+   <div class="col-md-5">
+    <div id="logbox" class="signup">
+      <form id="signin" method="post" action="/signup">
+        <h1>Login to Your Account</h1>
+        <div class="form-group user-name col-md-12">
+        	<label class="control-label col-lg-3">Email</label>
+        	<div class="col-lg-9">
+        	 <input type="text" class="form-control" id="email" placeholder="Email">
+         	</div>
+        </div>
+        <div class="form-group user-name col-md-12">
+        	<label class="control-label col-lg-3">Password</label>
+        	<div class="col-lg-9">
+         		<input type="text" class="form-control" id="password" placeholder="Password">
+        	</div>
+        </div>
+        <div class="form-group col-md-12">
+        	<div class="col-md-3">&nbsp;</div>
+        	<div class="col-md-9">
+            	<a href="#" class="btn btn-primary sends">Login </span></a>
+        	</div>
+        </div>
+        <div class="form-group col-md-12">
+        	<div class="col-md-3">&nbsp;</div>
+        	<div class="col-md-9">
+            	<h4>Don't have an account, <a href="#">Signup</a></h4>
+        	</div>
+        </div>
+        
+      </form>
+    </div>
+    </div>
+  </div>
+
+
+   
+<!-- FOOTER BLOCK -->
+
+<footer>
+<div class="footer-nav">
+<div class="container">
+<nav class="navbar footer-navi navbar-left">
+    <ul class="nav navbar-nav">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Profile</a></li>
+		<li><a href="#">Transaction</a></li>
+		<li><a href="#">Notes</a></li>
+        <li><a href="#">Login / Sign Up</a></li>
+    </ul>
+</nav>
+
+
+<div class="social-icons pull-right">
+     <a href="https://www.facebook.com/bootsnipp"><i class="fa fa-facebook-square fa-3x social"></i></a>
+	 <a href="https://twitter.com/bootsnipp"><i class="fa fa-twitter-square fa-3x social"></i></a>
+	 <a href="#"><i class="fa fa-instagram fa-3x social"></i></a> 
+	 <a href="#"><i class="fa fa-linkedin-square fa-3x social"></i></a>
+     <a href="#"><i class="fa fa-rss-square fa-3x social"></i></a>	 
+	 <a href="https://plus.google.com/+Bootsnipp-page"><i class="fa fa-google-plus-square fa-3x social"></i></a>
+	 
+
+</div>
+</div>
+</div>
+
+
+<div class="copyright">
+<div class="container">
+
+<div class="pull-left right-rev">
+<p>All rights Reserved © 2017 Learning</p>
+</div>
+<div class="pull-right design-deve">
+<p>Designed & Developed by <a href="startupbug.net">Startupbug.net</a></p>
+</div>
+</div>
+
+</div>
+
+</footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  </body>
+</html>
