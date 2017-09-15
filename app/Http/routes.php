@@ -302,3 +302,8 @@ Route::get('/login/callback/{provider?}',[
 
 //schedule
 Route::get('tutor/schedule', 'TutorController@tutorSchedule');
+Route::get('tutor/set-schedule', 'TutorController@tutorSetSchedule');
+Route::post('tutor/set-schedule/ajax', 'TutorController@tutorSetScheduleAjax');
+Route::get('tutor/scheduleGet', 'TutorController@arrObj');
+
+Route::post('tutor/submitShedule', 'TutorController@submitShedule')->name('submitShedule');

@@ -373,9 +373,56 @@ class TutorController extends Controller
           return redirect(route('tutorbookings'));
     }
 
+    public function arrObj(){
+        $time = \DB::table('schedule')->where('tutor_id', Auth::user()->id)->get();
+        $date  = $time[0]->date;
+
+        $times = json_decode( $time[0]->time );
+        $strings = [];
+        for($i=0; $i<count($times); $i++){
+                $temp = $date;
+                $temp .= 'T';
+                $temp .= $times[$i];
+                    $strings[] = (object)array('start'=> $temp);        
+        }
+        return $strings;
+    }
+
+
+
     public function tutorSchedule(){
+
+        
+      //  dd($strings);
+
     	return view('tutor.schedule')->with('tutor_globalflag',  $this->tutor_globalflag)
       ->with('tutor_earning', $this->tutor_earning)
       ->with('your_note_count', $this->your_note_count);;
+    }
+
+    public function tutorSetSchedule(){
+
+    	return view('tutor.set-schedule')->with('tutor_globalflag',  $this->tutor_globalflag)
+      ->with('tutor_earning', $this->tutor_earning)
+      ->with('your_note_count', $this->your_note_count);;
+    }
+
+    public function tutorSetScheduleAjax(Request $request){
+
+        //return $request->endWeek;
+
+    	$disView = view('tutor.set-schedule-ajax', ['sDate' => $request->startWeek])->render();
+
+            
+
+
+    	return $disView;
+    }
+
+    public function submitShedule(Request $request){
+       // dd($request->input());
+        $result = \DB::table('schedule')->insert(['date' => $request->input('date'), 'time' => json_encode( $request->input('timing') ),
+            'tutor_id' => Auth::user()->id]);
+        dd($result);
     }
 }
