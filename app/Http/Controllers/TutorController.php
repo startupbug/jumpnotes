@@ -372,4 +372,10 @@ class TutorController extends Controller
           });
           return redirect(route('tutorbookings'));
     }
+
+    public function tutorSchedule(){
+    	return view('tutor.schedule')->with('tutor_globalflag',  $this->tutor_globalflag)
+      ->with('tutor_earning', $this->tutor_earning)
+      ->with('your_note_count', $this->your_note_count);;
+    }
 }

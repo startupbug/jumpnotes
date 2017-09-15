@@ -22,12 +22,15 @@
     <!-- <link href="{{asset('/public/css/bootstrap-datetimepicker.css')}}" rel="stylesheet"> -->
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" /> -->
     <link rel="stylesheet" href="{{asset('/public/css/jquery.sharebox.css')}}">
+    <link rel="stylesheet" href="{{asset('/public/css/fullcalendar.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/public/css/fullcalendar.print.min.css')}}" media='print'>
 
-
+    <script src="{{asset('/public/js/moment.min.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script> -->
 
     <!-- Select2 css/js -->

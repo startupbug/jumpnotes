@@ -1102,3 +1102,69 @@ footer .footer-menu .footer-navi ul li a{ margin-left:-5px; margin-top:0; margin
   66.666% { opacity: 1}
   100% { opacity: 0}
 }
+
+
+
+
+/*SCHEDULE*/
+.schedule{
+width:100%;
+ background:#f8f8f8;
+}
+.schedule-date{
+width:27%; 
+float:left; 
+background:#f8f8f8;
+ min-height:44px;
+}
+.days{
+width:10%; 
+ float:left; 
+font-family:Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif; 
+font-size:13px; 
+text-align:center; 
+min-height:44px;
+}
+.days-height{
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+.schedule-date h3{
+font-size: 13px; 
+color: #384047; 
+line-height:16px; 
+font-family:Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif; 
+font-weight:400;
+ margin:6px 0;
+}
+.days-bg-grey{
+background:#f8f8f8; 
+color: #384047; 
+border-right:1px solid #f8f8f8;
+}
+.days-bg-red{
+background:red;
+}
+.days-bg-green{
+background:#50bf16; 
+}
+.days-bg-lightgreen{
+background:#a7df8a; 
+}
+.border-right{
+border-right:1px solid #fff;
+}
+.border-bottom{
+border-bottom:1px solid #fff;
+}
+.full-schedule{
+float: left;
+    width: 88%;
+    border: 1px solid;
+    text-align: center;
+    margin: 10px 0 0 0;
+    color: #35a1aa;
+    border-color: #35a1aa;
+    padding: 11px 16px;
+}

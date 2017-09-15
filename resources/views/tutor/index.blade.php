@@ -140,6 +140,51 @@
                         @else
                         <iframe  src="{{$tutor->intro_video_link}}" frameborder="0" allowfullscreen></iframe>
                         @endif
+                <div style="width:320px; float:left;">
+					<div class="schedule">
+						<div class="schedule-date">&nbsp;</div>
+						<div class="days days-bg-grey days-height">Mon</div>
+						<div class="days days-bg-grey days-height">Tue</div>
+						<div class="days days-bg-grey days-height">Wed</div>
+						<div class="days days-bg-grey days-height">Thu</div>
+						<div class="days days-bg-grey days-height">Fri</div>
+						<div class="days days-bg-grey days-height">Sat</div>
+						<div class="days days-bg-grey days-height">Sun</div>
+						<div class="schedule-date"><h3>Morning<br/><span>06:00—12:00</span></h3></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green"></div>
+						<div class="schedule-date"><h3>Afternoon<br/><span>12:00—18:00</span></h3></div>
+						<div class="days days-bg-lightgreen border-right border-bottom"></div>
+						<div class="days days-bg-lightgreen border-right border-bottom"></div>
+						<div class="days days-bg-lightgreen border-right border-bottom"></div>
+						<div class="days days-bg-lightgreen border-right border-bottom"></div>
+						<div class="days days-bg-lightgreen border-right border-bottom"></div>
+						<div class="days days-bg-lightgreen border-right border-bottom"></div>
+						<div class="days days-bg-lightgreen"></div>
+						<div class="schedule-date"><h3>Evening<br/><span>18:00—00:00</span></h3></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green border-right border-bottom"></div>
+						<div class="days days-bg-green"></div>
+						<div class="schedule-date"><h3>Night<br/><span>00:00—06:00</span></h3></div>
+						<div class="days days-bg-red border-right border-bottom"></div>
+						<div class="days days-bg-red border-right border-bottom"></div>
+						<div class="days days-bg-red border-right border-bottom"></div>
+						<div class="days days-bg-red border-right border-bottom"></div>
+						<div class="days days-bg-red border-right border-bottom"></div>
+						<div class="days days-bg-red border-right border-bottom"></div>
+						<div class="days days-bg-red"></div>
+					</div>
+					<div class="full-schedule" style="">View Full Schedule</div>
+				</div>
             </div>
                 @endif
             @endforeach

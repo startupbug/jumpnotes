@@ -296,3 +296,9 @@ Route::get('/login/callback/{provider?}',[
     'uses' => 'Auth\AuthController@getSocialAuthCallback',
     'as'   => 'auth.getSocialAuthCallback'
 ]);
+
+
+
+
+//schedule
+Route::get('tutor/schedule', 'TutorController@tutorSchedule');
