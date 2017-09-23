@@ -22,7 +22,11 @@ use Redirect;
 use App\Std_subscription;
 use Paypal;
 use App\Notecomment;
-
+use Stripe\Stripe;
+use Stripe\Charge;
+use Stripe\Customer;
+use Stripe\Account;
+use Stripe\Subscription;
 use Illuminate\Support\Facades\Input;
 
 
@@ -32,7 +36,7 @@ class NotesController extends Controller
     public function __construct(){
        parent::__construct();
        $this->middleware('auth');
-        $this->_apiContext = Paypal::ApiContext('Ae7ZZW-AvpehkfcJThodJvZoVu5ilr1Mxg1pQIDU2h7dupVG2Lmz_7mr7lO3iewAqfRkyJIVwN0_n3f7',
+        /*$this->_apiContext = Paypal::ApiContext('Ae7ZZW-AvpehkfcJThodJvZoVu5ilr1Mxg1pQIDU2h7dupVG2Lmz_7mr7lO3iewAqfRkyJIVwN0_n3f7',
             'EKMVlkDsnqHOSDP2Ye8Olho535mvfYXNUinZGYPsu9DzhM8hoCaabk1JTrMfPdIZOcMbyJqXQvnknX1C');
 
         $this->_apiContext->setConfig(array(
@@ -42,7 +46,7 @@ class NotesController extends Controller
             'log.LogEnabled' => true,
             'log.FileName' => storage_path('logs/paypal.log'),
             'log.LogLevel' => 'FINE'
-        ));
+        ));*/
     }
 
     public function uploadNotes(Request $request){
@@ -471,46 +475,45 @@ class NotesController extends Controller
     }
     public function download_payment(Request $request){
 
-        $request->session()->flash('author_id',$request->author_id);
-        $request->session()->flash('note_id',$request->note_id);
+        //dd($request->stripeEmail);
+        Stripe::setApiKey(config('services.stripe.secret'));
+        $connected_account = \Stripe\Account::retrieve("acct_1B1re5By5xtIUy1A"); 
+        $connected_account_id = $connected_account->id;
 
-        $payer = PayPal::Payer();
-        $payer->setPaymentMethod('paypal');
 
-        $itemItemPrice = 1.99;
-        $item = PayPal::Item();
-        $item->setQuantity(1);
-        $item->setName('Note download payment');
-        $item->setPrice($itemItemPrice);
-        $item->setCurrency('USD');
+        $customer = \Stripe\Customer::create(array(
+          "description" => "Customer for ".$request->email,
+          "source" => 'tok_visa',//$cust_stripe_id // obtained with Stripe.js
+        ),array('stripe_account' => $connected_account_id ));
+        $customer_id = $customer->id;
 
-        $itemList = PayPal::ItemList();
-        $itemList->setItems(array($item));
 
-        $totalAmount = 1.99;
-        $amount = PayPal::Amount();
-        $amount->setCurrency('USD');
-        $amount->setTotal($totalAmount);
 
-        $transaction = PayPal::Transaction();
-        $transaction->setAmount($amount);
-        $transaction->setItemList($itemList);
-        $transaction->setDescription('Student Monthly Subscription');
+        $subscription = \Stripe\Subscription::create(array(
+          "customer" => $customer_id,
+          "items" => array(
+            array(
+              "plan" => "student-subscription",
+            ),
+          ),
+          "application_fee_percent" => 44.73,
+        ), array("stripe_account" => $connected_account_id ));
 
-        $redirectUrls = PayPal:: RedirectUrls();
-        $redirectUrls->setReturnUrl(action('NotesController@downloadPaymentReceived'));
-        $redirectUrls->setCancelUrl(action('NotesController@downloadPaymentCancel'));
+        if($subscription->id){
+            $subs = Std_subscription::create([
+                'std_id' => Auth::user()->id,
+                'author_id' => $request->author_id,
+                'expiry_date' => '',
+                'subs_return' => $subscription
+            ]);
+            return redirect()->back()->with('status', 'Subscription Successful.');;
+        }
+        else{
+            return redirect()->back()->with('failed', 'Subscription failed.');;   
+        }
+        //$status = \Stripe\Subscription::retrieve($subscription->id);
+        //dd($subscription);
 
-        $payment = PayPal::Payment();
-        $payment->setIntent('sale');
-        $payment->setPayer($payer);
-        $payment->setRedirectUrls($redirectUrls);
-        $payment->setTransactions(array($transaction));
-
-        $response = $payment->create($this->_apiContext);
-        $redirectUrl = $response->links[1]->href;
-
-        return redirect::to( $redirectUrl );
     }
 
     public function notecomment(Request $request){

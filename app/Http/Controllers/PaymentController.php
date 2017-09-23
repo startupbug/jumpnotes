@@ -13,6 +13,11 @@ use App\Tutor;
 use App\On_trail;
 use Srmklive\PayPal\Services\ExpressCheckout;
 use Srmklive\PayPal\Services\AdaptivePayments;
+use Stripe\Stripe;
+use Stripe\Charge;
+use Stripe\Customer;
+use Stripe\Account;
+use Stripe\Subscription;
 
 class PaymentController extends Controller
 {
@@ -82,7 +87,7 @@ $response = $provider->createYearlySubscription($token, $amount, $description);
 
     public function payment_post(){
 
-             $payer = PayPal::Payer();
+             /*$payer = PayPal::Payer();
              $payer->setPaymentMethod('paypal');
 
              $itemItemPrice = 3.99;
@@ -116,7 +121,28 @@ $response = $provider->createYearlySubscription($token, $amount, $description);
              $payment->setTransactions(array($transaction));
 
              $response = $payment->create($this->_apiContext);
-             $redirectUrl = $response->links[1]->href;
+             $redirectUrl = $response->links[1]->href;*/
+
+             \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+
+              $customer = $customer = \Stripe\Customer::create(array(
+                "description" => "Customer for ".$request->input('stripeEmail'),
+                "source" => 'tok_visa',
+              ));
+              
+              $customer_id = $customer->id;
+              //dd($customer_id);
+
+              $subcription = \Stripe\Subscription::create(array(
+                "customer" => $customer_id,
+                "items" => array(
+                  array(
+                    "plan" => "rod-plan",
+                  ),
+                )
+              ));
+
+              dd($subcription);
 
              return Redirect::to( $redirectUrl );
 

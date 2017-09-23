@@ -164,6 +164,7 @@ return [
         //Oureastudios\Laravel\BraintreeServiceProvider::class,
         yajra\Datatables\DatatablesServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
+        Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
     ],
 
     /*
@@ -215,6 +216,7 @@ return [
         'Zipper' => Chumper\Zipper\Zipper::class,
         'Datatables' => yajra\Datatables\Datatables::class,
         'ckeditor' => Unisharp\Ckeditor\ServiceProvider::class,
+        'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
 
     ],
 

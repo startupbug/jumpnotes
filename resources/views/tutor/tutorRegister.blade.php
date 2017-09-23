@@ -232,7 +232,7 @@ $("#LoaderGif").hide();
             e.preventDefault();
 //        base_url  = '/ukshortlets/';
             var url = $(this).attr('action');
-       $("#LoaderGif").show();
+            $("#LoaderGif").show();
             var formData = new FormData(this);
                // console.log();
             $.ajaxSetup({

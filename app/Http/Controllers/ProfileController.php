@@ -184,15 +184,17 @@ class ProfileController extends Controller
             ->join('lessons', 'lessons.tutor_id','=', 'tutors.tutor_id')
             ->first();
           //dd($tutor);
-
         $my_institute = User::join('institutes', 'users.institute_id', '=', 'institutes.institute_id')->where('users.id', $id)->first(['institutes.institute_name']);
         $data['myProfileFlag'] = false;
         $data['subscription_check'] = 0;
         $data['subscription_check'] = Std_subscription::where('std_id',Auth::user()->id)->where('author_id',$id)->exists();
 
+        $schedule = \DB::table('schedule')->where([['tutor_id','=', $id], ['date', '>=', date("Y/m/d")]])->paginate(336);
+        
         return view('dashboard.profile.tutor_profile_view')->with('tutor', $tutor)->with('my_institute', $my_institute)
         ->with($data)->with('logo_file', $this->logo_file)->with('your_note_count', $this->your_note_count)
             ->with('tutor_globalflag',  $this->tutor_globalflag)
+            ->with('schedule',  $schedule)
             ->with('tutor_earning', $this->tutor_earning);
     }
 
@@ -241,6 +243,18 @@ class ProfileController extends Controller
         }
     }
 
+    public function bookShedule(Request $request){
+        $schAr;
+        //dd($sch);
+        foreach ($request->sch as $sch) {
+            $schAr[] = explode(",",$sch);
+        }
+        foreach ($schAr as $sc) {
 
+            \DB::table('schedule')->where('id',$sc[0])->update(['status' => $sc[1]]);
+        }
+       return redirect()->back();
+        
+    }
 
 }

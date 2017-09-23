@@ -214,7 +214,7 @@ console.log("four");
 });
 </script>
 <script type="text/javascript">
-$('table.schedule-table tr td div').click(function() {
+$('table.tutor tr td div').click(function() {
   var id= $(this).parent().find("input").data("id");
   var state = $(this).parent().find("input").data("state");
   var status = state == 0 ? 1 : 0;
@@ -226,10 +226,25 @@ $('table.schedule-table tr td div').click(function() {
   $(this).addClass(clas);
   //alert($(this).parent().find("input").val());
 });
+
+$('table.student tr td div.sch').click(function() {
+  var id= $(this).parent().find("input").data("id");
+  var state = $(this).parent().find("input").data("state");
+  var status = state == 1 ? 2 : 1;
+  var clas = state == 1 ? 'blue' : 'green';
+  $(this).parent().find("input").attr('value', id +','+status);
+  $(this).parent().find("input").data("state", status);
+  $(this).removeClass('blue');
+  $(this).removeClass('green');
+  $(this).addClass(clas);
+  //alert($(this).parent().find("input").val());
+});
+$('[data-toggle="tooltip"]').tooltip();
 </script>
 <style type="text/css">
 .red{background:red;}
 .green{background:green ;}
+.blue{background: #1f7f9f;}
 .without-bg{background:transparent; border:0 none; width:100px; visibility:hidden; height:20px;}
 .table.schedule-table>tbody>tr>td{padding:1px !important; line-height: 20px; height: 20px; padding-top: 0 !important;}
 table.table.schedule-table{width:60%; margin:auto;}

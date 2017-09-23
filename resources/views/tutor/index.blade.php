@@ -125,7 +125,8 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 text-right links tutor-view">
-                        <a tutor-name="{{$tutor->username}}" tutor-about = "{{$tutor->tutor_about}}" tutor-pic="{{$tutor->profile_pic}}" tutor-native = "{{$tutor->name}}" tutor-id = "{{$tutor->tutor_id}}" href="#tutorbooking" data-toggle="modal" data-target="#tutorbooking" class="lessonBook btn btn-primary edits">BOOK TUTOR</a>
+                        <!-- <a tutor-name="{{$tutor->username}}" tutor-about = "{{$tutor->tutor_about}}" tutor-pic="{{$tutor->profile_pic}}" tutor-native = "{{$tutor->name}}" tutor-id = "{{$tutor->tutor_id}}" href="#tutorbooking" data-toggle="modal" data-target="#tutorbooking" class="lessonBook btn btn-primary edits">BOOK TUTOR</a> -->
+                        <a href="{{route('profile_view',['id' => $tutor->users_id ])}}" class="lessonBook btn btn-primary edits">BOOK TUTOR</a>
                         <a href="{{route('tutor_notes',['author_id'=>$tutor->users_id])}}" class="btn btn-primary edits">VIEW NOTES</a>
                         <a href="#" class="btn btn-primary edits sendMsg" id="{{$tutor->users_id}}">SEND MESSAGE</a>
                     </div>
@@ -140,51 +141,7 @@
                         @else
                         <iframe  src="{{$tutor->intro_video_link}}" frameborder="0" allowfullscreen></iframe>
                         @endif
-                <div style="width:320px; float:left;">
-					<div class="schedule">
-						<div class="schedule-date">&nbsp;</div>
-						<div class="days days-bg-grey days-height">Mon</div>
-						<div class="days days-bg-grey days-height">Tue</div>
-						<div class="days days-bg-grey days-height">Wed</div>
-						<div class="days days-bg-grey days-height">Thu</div>
-						<div class="days days-bg-grey days-height">Fri</div>
-						<div class="days days-bg-grey days-height">Sat</div>
-						<div class="days days-bg-grey days-height">Sun</div>
-						<div class="schedule-date"><h3>Morning<br/><span>06:00—12:00</span></h3></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green"></div>
-						<div class="schedule-date"><h3>Afternoon<br/><span>12:00—18:00</span></h3></div>
-						<div class="days days-bg-lightgreen border-right border-bottom"></div>
-						<div class="days days-bg-lightgreen border-right border-bottom"></div>
-						<div class="days days-bg-lightgreen border-right border-bottom"></div>
-						<div class="days days-bg-lightgreen border-right border-bottom"></div>
-						<div class="days days-bg-lightgreen border-right border-bottom"></div>
-						<div class="days days-bg-lightgreen border-right border-bottom"></div>
-						<div class="days days-bg-lightgreen"></div>
-						<div class="schedule-date"><h3>Evening<br/><span>18:00—00:00</span></h3></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green border-right border-bottom"></div>
-						<div class="days days-bg-green"></div>
-						<div class="schedule-date"><h3>Night<br/><span>00:00—06:00</span></h3></div>
-						<div class="days days-bg-red border-right border-bottom"></div>
-						<div class="days days-bg-red border-right border-bottom"></div>
-						<div class="days days-bg-red border-right border-bottom"></div>
-						<div class="days days-bg-red border-right border-bottom"></div>
-						<div class="days days-bg-red border-right border-bottom"></div>
-						<div class="days days-bg-red border-right border-bottom"></div>
-						<div class="days days-bg-red"></div>
-					</div>
-					<div class="full-schedule" style="">View Full Schedule</div>
-				</div>
+					<a class="full-schedule" href="{{route('profile_view',['id' => $tutor->users_id ])}}">View Full Schedule</a>
             </div>
                 @endif
             @endforeach

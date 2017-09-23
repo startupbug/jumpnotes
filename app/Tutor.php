@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Tutor extends Model
-{
+{ 
 	
     protected $fillable = [
         'tutor_id', 'user_id','country_id','state_id','city_id', 'tutor_phone', 'languag_id','other_languages','tutor_unique',
@@ -14,4 +14,9 @@ class Tutor extends Model
     ];
 
     protected $primaryKey = 'tutor_id';
+
+    public static function ifTutorIs($userid){
+    	$isTutor = DB::table('tutors')->where('users_id', $userid)->exists();
+    	return $isTutor;
+    }
 }

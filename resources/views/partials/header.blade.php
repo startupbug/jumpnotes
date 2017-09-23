@@ -89,6 +89,7 @@
                         <li><a href="{{ route('requestsView') }}">Your Requests</a></li>
                         @if($tutor_globalflag)
                         <li><a href="{{route('tutorbookings')}}">Student Requests</a></li>
+                        <li><a href="{{route('setSchedule')}}">Set Schedule</a></li>
                         <li>
 						<!--<a href="#withdrawModal" data-toggle="modal" data-target="#withdrawModal">Earned: $ {{$tutor_earning}}</a>-->
 						<a>Earned: $ {{$tutor_earning}}</a>

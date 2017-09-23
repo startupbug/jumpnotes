@@ -105,6 +105,18 @@ toastr.success('{{Session::get('payment_success')}}');
 
 		</div>
 		<!------ NEW ROW FOR PROFILE -->
+    @if (session('status'))
+        <div class="alert alert-success alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ session('status') }}
+        </div>
+    @endif
+    @if (session('failed'))
+        <div class="alert alert-danger alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ session('failed') }}
+        </div>
+    @endif
 		<div class="col-lg-12 bg-profile float">
 			<div class="col-md-5 col-sm-5 no-pad-left no-pad-right detail">
 
@@ -142,7 +154,21 @@ toastr.success('{{Session::get('payment_success')}}');
                  @endif
 				@if($tutor->users_id != Auth::user()->id)
                       @if(!$subscription_check)
-                      <a href="#download_payment" data-toggle="modal" data-target="#download_payment" class="btn btn-default btn-lg subscribe edit-button new-edit edits free-trial subscribed-button edit-profile">Subscribe</a>
+                      <!-- <a href="#download_payment" data-toggle="modal" data-target="#download_payment" class="btn btn-default btn-lg subscribe edit-button new-edit edits free-trial subscribed-button edit-profile">Subscribe</a> -->
+                      <div class="btn btn-default btn-lg subscribe">
+                        <form id="std_subscription" method="post" action="{{route('download_payment')}}" role="form">
+                            <input type="hidden" value="{{csrf_token()}}" name="_token"/>
+                            <input type="hidden" name="author_id" class="tutor_id" value="{{$tutor->users_id}}"/>
+                            <input type="hidden" name="note_id" class="std_id" value="0"/>
+                            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                               data-key="pk_test_W31xNmmJPBpIyyc3LxH89mGi"
+                               data-amount="199"
+                               data-name="Subscribe {{$tutor->tutor_unique}}"
+                               data-image="http://site.startupbug.net:6999/rod/rod/public/dynamic_assets/1495873280-j_logo.png"
+                               data-locale="auto">
+                            </script>
+                        </form>
+                      </div>
                       @else
                       <a class="btn btn-default btn-lg subscribe edit-button new-edit edits free-trial subscribed-button edit-profile" disabled>Subscribed</a>
                       @endif
@@ -180,6 +206,97 @@ toastr.success('{{Session::get('payment_success')}}');
 
 			  </div>
 		</div>
+    <div class="container-fluid text-center trans-text">
+      <h3>Tutor Schedule</h3>
+    </div>
+    <div>
+          @foreach($schedule as $da)
+              <?php $ar[] = $da;?>
+          @endforeach
+      @if(!empty($ar))
+          <style>
+  section.button_info{
+    max-width:50%;
+    margin:0px auto 10px;
+    text-align:center;
+  }
+
+section.button_info .nan span{
+    width:100px;
+    height:20px;
+    display:block;
+    background:red;
+}
+section.button_info label{
+    margin:0px 5px;
+    text-align:center;
+  text-indent: 3px;
+}
+section.button_info .booked span{
+    width:100px;
+    height:20px;
+    display:block;
+    background:#1f7f9f;
+}
+section.button_info .avl span{
+    width:100px;
+    height:20px;
+    display:block;
+    background:green;
+}
+  </style>
+  <section class="button_info">
+  <label class="nan">Not Available<span></span></label>
+  <label class="booked">Booked<span></span></label>
+  <label class="avl">Available<span></span></label>
+  </section>
+          <form method="post" action="{{route('bookShedule')}}" class="schedule-list">    
+              <div class="table-responsive">
+                  <table class="table schedule-table student">
+                      <tr>
+                          <?php 
+                              $b = count($ar); 
+                              $x = $b/48;
+                          ?>
+                          <td></td>
+                          @for($a=0; $a<$b;)
+                              <td>{{ $ar[$a]->date }}</td>
+                             <?php $a = $a + 48; ?>   
+                          @endfor
+                      </tr>
+                      @for($i=0;$i<=47;$i++)
+                          <tr>
+                              <td width="10%">{{ $ar[$i]->time }}</td>
+                              @for($a=$i; $a<$b;)
+                                @if($ar[$a]->status == 1)
+                                  <td width="10%" style="position:relative;"><input data-stat="{{ $ar[$a]->status }}" class="without-bg" type="text" name="sch[]" data-id="{{ $ar[$a]->id }}" data-state="{{ $ar[$a]->status }}" value="{{ $ar[$a]->id }},{{ $ar[$a]->status }}" readonly>
+                                  <div style="position:absolute;width:100px;height:20px;top:0px;left:0; right:0; margin:0 auto;" class="sch green" data-toggle="tooltip"  title="<?php echo $ar[$a]->status == 2 ? 'Booked' : ($ar[$a]->status == 1 ? 'Available' : 'Not Available')?>: {{ $ar[$a]->date }}, {{ $ar[$a]->time }}"></div>
+                                @else
+                                  <td width="10%" style="position:relative;">
+                                    <div style="position:absolute;width:95%;height:20px;top:0px;left:0; right:0; margin:0 auto;" class="<?php echo $ar[$a]->status == 2 ? 'blue' : 'red' ?>" data-toggle="tooltip"  title="<?php echo $ar[$a]->status == 2 ? 'Booked' : ($ar[$a]->status == 1 ? 'Available' : 'Not Available')?>: {{ $ar[$a]->date }}, {{ $ar[$a]->time }}"></div>
+                                  </td>
+                                @endif
+                  </td>
+                                 <?php $a = $a + 48; ?>   
+                              @endfor
+                          </tr>
+                      @endfor
+
+                  </table>
+              <div style="width:60%; margin:auto;">{{ $schedule->links() }}</div>
+              </div>
+              <div class="row">
+              <!-- <input type="hidden" name="_token" value="{{csrf_token()}}"> -->
+              {!! csrf_field() !!}
+              <button type="submit" class="btn btn-primary edits">Save</button>
+          </div>
+          </form>
+      @else
+        <div>
+          <h3 style="text-align: center;">No Schedule Available</h3>
+        </div>
+      @endif
+    </div>
         </div>
 	<!-- new row for profile -->
 
@@ -228,66 +345,18 @@ toastr.success('{{Session::get('payment_success')}}');
                     <div class="col-md-9 col-md-offset-1">
                         <form id="std_subscription" method="post" action="{{route('download_payment')}}" role="form">
                         <!-- <form id="std_subscription" method="post" action="{{route('brainTest')}}" role="form"> -->
+                             <input type="hidden" value="{{csrf_token()}}" name="_token"/>
                             <div class="form-group">
                                 <h4>You will be able to access and download all Notes of the Tutor <b>"{{$tutor->tutor_unique}}"</b> for Just $1.99/Month !!</h4>
                                 <input type="hidden" name="author_id" class="tutor_id" value="{{$tutor->users_id}}"/>
                                 <input type="hidden" name="note_id" class="std_id" value="0"/>
-                                <input type="hidden" value="{{ Session::token() }}" name="_token" />
-                            </div>
-                            <div class="form-group">
-                                {{--<form id="transaction" method="post" role="form" action="{{route('brainTest')}}">--}}
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <input type="text" class="form-control" required id="fname" name="fname" placeholder="FIRST NAME">
-                                        </div>
-                                        <input type="hidden" name="plan_id" value="mybw"/>
-                                        <input type="hidden" name="amount" value="1.99"/>
-                                        <input type="hidden" name="subscription" value="1"/>
-                                        <input type="hidden" name="pay_from" value="std_subscription"/>
-                                        <div class="form-group col-md-6 send-payment-box">
-                                            <input type="text" required class="form-control" id="card-no" name="card-no" placeholder="CARD NUMBER">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <span style="color:red" class="note_title"></span>
-                                            <input type="text" required class="form-control" id="lname" name="lname" placeholder="LAST NAME">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <input type="text" required class="form-control" id="ex-date" name="ex-date" placeholder="EXPIRY DATE  example : 8/18">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="PHONE NUMBER">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVC/CVV">
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <input type="text" required class="form-control" id="email" name="email" placeholder="EMAIL">
-                                        </div>
-                                        <div class="form-group notes-detail col-md-12 text-center">
-                                            {{--<input type="submit" class="btn btn-primary " value="submit"/>--}}
-                                        </div>
-                                        {{csrf_field()}}
-
-                                        {{--<div class="form-group col-md-12 text-center">--}}
-                                            {{--<hr/>OR<div id="paypal-container"></div>--}}
-                                        {{--</div>--}}
-
-
-
-
-
-
-
-
-
-
-
-                                    </div>
-                                <!-- <h6> <b>Please note</b> : The subscription will only be applied to the author you are subscribing to. After one month your subscription will be automatically cancelled.</h6> -->
-                                {{--</form>--}}
-                                <div class="col-md-8 col-md-offset-1">
-                                <input type="submit" class="btn btn-warning pull-right form-group" style="padding: 6% 15%" name="subscribe" value="Subscribe"/>
-                                </div>
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                 data-key="pk_test_W31xNmmJPBpIyyc3LxH89mGi"
+                                 data-amount="999"
+                                 data-name="Subscribe Tutor"
+                                 data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                 data-locale="auto">
+                               </script>
                             </div>
                         </form>
                     </div>

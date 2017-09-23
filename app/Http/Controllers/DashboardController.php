@@ -26,7 +26,7 @@ class DashboardController extends Controller
 
     public function __construct(){
         $this->middleware('auth');
-        $this->_apiContext = Paypal::ApiContext('Ae7ZZW-AvpehkfcJThodJvZoVu5ilr1Mxg1pQIDU2h7dupVG2Lmz_7mr7lO3iewAqfRkyJIVwN0_n3f7',
+        /*$this->_apiContext = Paypal::ApiContext('Ae7ZZW-AvpehkfcJThodJvZoVu5ilr1Mxg1pQIDU2h7dupVG2Lmz_7mr7lO3iewAqfRkyJIVwN0_n3f7',
             'EKMVlkDsnqHOSDP2Ye8Olho535mvfYXNUinZGYPsu9DzhM8hoCaabk1JTrMfPdIZOcMbyJqXQvnknX1C');
 
         $this->_apiContext->setConfig(array(
@@ -36,7 +36,7 @@ class DashboardController extends Controller
             'log.LogEnabled' => true,
             'log.FileName' => storage_path('logs/paypal.log'),
             'log.LogLevel' => 'FINE'
-        ));
+        ));*/
 
        parent::__construct();
     }

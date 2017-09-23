@@ -1168,3 +1168,13 @@ float: left;
     border-color: #35a1aa;
     padding: 11px 16px;
 }
+.red{background:red;}
+.green{background:green ;}
+.blue{background: #1f7f9f;}
+.without-bg{background:transparent; border:0 none; width:100px; visibility:hidden; height:20px;}
+.table.schedule-table>tbody>tr>td{padding:1px !important; line-height: 20px; height: 20px; padding-top: 0 !important;}
+table.table.schedule-table{width:60%; margin:auto;}
+.set-schedule{margin:auto auto 3% auto; width:60%;}
+.set-schedule input[type="date"]{float:left; width:33%; margin-right:1%;}
+.set-schedule input[type="submit"]{width:32%;}
+.schedule-list{float:left; width:100%;}

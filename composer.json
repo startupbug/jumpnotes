@@ -11,7 +11,9 @@
         "aloha/twilio": "^3.0",
         "laravel/socialite": "~2.0",
         "chumper/zipper": "1.0.x",
-        "unisharp/laravel-ckeditor": "^4.6"
+        "unisharp/laravel-ckeditor": "^4.6",
+        "cartalyst/stripe-laravel": " 4.0.*",
+        "stripe/stripe-php": "^5.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

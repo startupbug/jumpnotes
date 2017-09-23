@@ -402,29 +402,40 @@ class TutorController extends Controller
     }
 
     public function tutorSetSchedule(){
+        $isTutor = Tutor::where('users_id',Auth::user()->id)->first();
+        if($isTutor){
+            $data = \DB::table('schedule')->where([['tutor_id','=', Auth::user()->id], ['date', '>=', date("Y/m/d")]])->paginate(336);
 
-        $data = \DB::table('schedule')->where([['tutor_id','=', Auth::user()->id], ['date', '>=', date("Y/m/d")]])->paginate(336);
-
-        
-        /*dd($ar);*/
-    	return view('tutor.set-schedule',['data' => $data])->with('tutor_globalflag',  $this->tutor_globalflag)
-      ->with('tutor_earning', $this->tutor_earning)
-      ->with('your_note_count', $this->your_note_count);
+            
+            /*dd($ar);*/
+        	return view('tutor.set-schedule',['data' => $data])->with('tutor_globalflag',  $this->tutor_globalflag)
+          ->with('tutor_earning', $this->tutor_earning)
+          ->with('your_note_count', $this->your_note_count);
+        }
+        else{
+            return redirect()->route('home');
+        }
     }
 
     public function tutorSetScheduleAjax(Request $request){
         
         $sDate = $request->startWeek;
         $eDate = $request->endWeek;
-
+   
        while($sDate <= $eDate){
             
+  //Check if sdate with This tutor is already in the database
+                    $check_existance = \DB::table('schedule')->where('date', $sDate)
+                                        ->where('tutor_id', Auth::user()->id)->exists();
+                                       // dd();
+                    if(!$check_existance){                  
             $time = new \DateTime('00:00:00');
             for($i=1;$i<=48; $i++){
                 \DB::table('schedule')->insert(['date' => $sDate, 'time' => $time->format('H:i'), 'tutor_id' => Auth::user()->id, 'status' => 0]);
                 $time = $time->add(new \DateInterval('PT30M'));
             }
-            $sDate = Date('Y-m-d',strtotime("+1 day", strtotime($sDate)));
+             }
+                    $sDate = Date('Y-m-d',strtotime("+1 day", strtotime($sDate)));  
         }       
     	return redirect()->route('setSchedule');
     }
@@ -442,4 +453,5 @@ class TutorController extends Controller
        return redirect()->back();
         
     }
+
 }

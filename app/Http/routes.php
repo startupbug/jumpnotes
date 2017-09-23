@@ -307,3 +307,4 @@ Route::post('tutor/set-schedule/ajax', 'TutorController@tutorSetScheduleAjax')->
 Route::get('tutor/scheduleGet', 'TutorController@arrObj');
 
 Route::post('tutor/submitShedule', 'TutorController@submitShedule')->name('submitShedule');
+Route::post('tutor/bookShedule', 'ProfileController@bookShedule')->name('bookShedule');

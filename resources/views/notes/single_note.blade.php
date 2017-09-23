@@ -275,7 +275,21 @@
                             {{--<samll><a href="{{ asset('/public/notes/'. $noteDetail->note_file) }}" download="{{route('download_file',$noteDetail->note_file)}}">Download <i class="fa fa-download"></i></a></samll>--}}
                         @endif
                             @else
-                            <samll><a href="#download_payment" data-toggle="modal" data-target="#download_payment" >Download <i class="fa fa-download"></i></a></samll>
+                            <!-- <samll><a href="#download_payment" data-toggle="modal" data-target="#download_payment" >Downloads <i class="fa fa-download"></i></a></samll> -->
+                            <div class="btn btn-default btn-lg subscribe">
+                                <form id="std_subscription" method="post" action="{{route('download_payment')}}" role="form">
+                                    <input type="hidden" value="{{csrf_token()}}" name="_token"/>
+                                    <input type="hidden" name="author_id" class="tutor_id" value="{{$authorDetail->users_id}}"/>
+                                    <input type="hidden" name="note_id" class="std_id" value="0"/>
+                                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                       data-key="pk_test_W31xNmmJPBpIyyc3LxH89mGi"
+                                       data-amount="199"
+                                       data-name="Subscribe {{$authorDetail->tutor_unique}}"
+                                       data-image="http://site.startupbug.net:6999/rod/rod/public/dynamic_assets/1495873280-j_logo.png"
+                                       data-locale="auto">
+                                    </script>
+                                </form>
+                              </div>
                         @endif
                         @else
                         <samll><a href="{{ asset('/public/notes/'. $noteDetail->note_file) }}" download="{{route('download_file',$noteDetail->note_file)}}">Download <i class="fa fa-download"></i></a></samll>
@@ -287,9 +301,9 @@
 
                     {{--<a tutor_id="{{$authorDetail->users_id }}" href="#myModaltransaction" data-toggle="modal" data-target="#myModaltransaction" class="btn btn-primary pull-right create_contact">Pay through paypal</a>--}}
                 {{--</form>--}}
-                <?php $clientToken = Braintree_ClientToken::generate();?>
-                    <script type="text/javascript">
-                        braintree.setup("{{$clientToken}}", "custom", {
+                <?php// $clientToken = Braintree_ClientToken::generate();?>
+                    <!-- <script type="text/javascript">
+                        braintree.setup("", "custom", {
                             paypal: {
                                 container: "paypal-container",
                                 singleUse: true, // Required
@@ -314,7 +328,7 @@
                                 alert('payed successfully');
                             }
                         });
-                </script>
+                </script> -->
 
 
 
@@ -438,17 +452,6 @@
                                                         {{--<div class="form-group col-md-12 text-center">--}}
                                                             {{--<hr/>OR<div id="paypal-container"></div>--}}
                                                         {{--</div>--}}
-
-
-
-
-
-
-
-
-
-
-
                                                     </div>
                                                 <!-- <h6> <b>Please note</b> : The subscription will only be applied to the author you are subscribing to. After one month your subscription will be automatically cancelled.</h6> -->
                                                 {{--</form>--}}
