@@ -88,6 +88,7 @@
 
                         <li><a href="{{ route('requestsView') }}">Your Requests</a></li>
                         @if($tutor_globalflag)
+                        <li><a href="{{route('cancel_subscription_t')}}" onclick="return confirm('Are you sure?')">Cancel Tutor Account</a></li>
                         <li><a href="{{route('tutorbookings')}}">Student Requests</a></li>
                         <li><a href="{{route('setSchedule')}}">Set Schedule</a></li>
                         <li>

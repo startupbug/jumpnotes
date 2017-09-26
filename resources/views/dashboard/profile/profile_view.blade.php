@@ -154,8 +154,9 @@
 			</div>
 			<div class="col-lg-8 chat-section-tabs float">
 				<ul class="nav nav-tabs no-bd-bt">
-                  <li class="active popup"><a data-toggle="tab" href="#home">Chats <strong>({{Config::get('unread_msgs')}})</strong></a></li>
-                  <li><a data-toggle="tab" href="#menu1">Chat Groups</a></li>
+                  <li class="active popup"><a data-toggle="tab" href="#home" id="home">Chats <strong>({{Config::get('unread_msgs')}})</strong></a></li>
+                  <li><a data-toggle="tab" href="#menu1" id="menu1button">Chat Groups</a></li>
+				  <li><a data-toggle="tab" href="#menu2" id="menu2button">Payments</a></li>
                   @if(!$tutor_globalflag)
                   <li><a href="{{route('tutorRegisterView')}}">Become Tutor</a></li>
                   @endif
@@ -204,7 +205,7 @@
                 @endif
 
               </div>
-			  <div class="col-md-7 col-sm-7 no-pad-left  no-pad-right detail without-pad">
+			  <div class="col-md-7 col-sm-7 no-pad-left  no-pad-right detail without-pad" id="menu3">
 				<div class="col-lg-12 float payment-buttons">
 
 
@@ -213,17 +214,28 @@
 					@if($tutor->users_id == Auth::user()->id)
 				<!-- <a href="{{ route('editprofile_index') }}" class="btn btn-primary edits">EDIT Profile</a> -->
                 <a href="{{ route('editprofile_index') }}" class="btn btn-primary btn-md edit-button new-edit edit-profile" style="">Edit Profile</a>
-					<!-- @if($tutor->is_paid == 0)  -->
-						<a href="{{ route('payment_post') }}" class="btn btn-primary edit-button new-edit edit-profile">Payment</a>
+					@if($tutor->is_paid == 0) 
+            <form id="std_subscription" method="post" action="{{route('payment_post')}}" role="form">
+                <input type="hidden" value="{{csrf_token()}}" name="_token"/>
+                <input type="hidden" name="author_id" class="tutor_id" value="{{Auth::user()->id}}"/>
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                   data-key="{{config('services.stripe.key')}}"
+                   data-amount="399"
+                   data-name="Tutor Subscription"
+                   data-image="http://site.startupbug.net:6999/rod/rod/public/dynamic_assets/1495873280-j_logo.png"
+                   data-locale="auto">
+                </script>
+            </form>
+						<!-- <a href="{{ route('payment_post') }}" class="btn btn-primary edit-button new-edit edit-profile">Payment</a> -->
                 	<!--<a href="{{ route('payment_post') }}" href="#myModaltransaction" data-toggle="modal" data-target="#myModaltransaction" class="btn btn-primary btn-md edit-button new-edit edit-profile">Payment</a>-->
-                	<!-- @endif -->
+            @endif
   				@endif
 				@else
                 <a href="#" class="btn btn-primary btn-md edit-button new-edit edit-profile" style="text-decoration:none; margin-right:0;" data-toggle="modal" data-target="#myModal">Edit Profile</a> @endif
 
 
 
-				<!-------------------------->
+
                 @if(isset($tutor->intro_video_link) && $tutor->intro_video_link!=Null)
 
                 <a href="#" class="btn btn-default btn-lg btn-md watch-intro free-trial" data-toggle="modal" data-target="#watchVideo">Watch My Introduction</a> @else
@@ -256,6 +268,35 @@
 </div>
 
 			  </div>
+			  
+			  
+			  <!-- new section for payment -->
+			  
+			  <div class="col-md-7 col-sm-7 no-pad-left  no-pad-right detail without-pad" id="menu2">
+				<div class="col-lg-12 float payment-buttons payment-form">
+				<form action="#">
+					<div class="col-lg-12 no-pad-left">
+                        <div class="form-group note-title col-md-12">
+                            <h4 class="no-marg-top no-marg-bottom">Label 1 </h4>
+                        </div>
+                        <div class="form-group note-title col-md-6">
+                            <input type="text" name="label1" class="form-control" id="label1" placeholder="Label 1 Text">
+                        </div>
+						<div class="form-group notes-detail col-md-6 ">
+                            <input type="button" class="btn btn-primary btn-md edit-button new-edit edit-profile" value="submit" id="submitclick">
+                        </div>
+						<div class="form-group note-title col-md-12">
+                            <a href="#" id="submitclickfunction" class="btn btn-primary btn-md edit-button new-edit edit-profile" style="text-decoration:none; margin-right:0;" >Config</a> 
+                        </div>
+					
+					
+				</form>
+				</div>
+				<div class="col-lg-12 float about-box">
+					Note : Lorem ipsum dolor sit amet
+				</div>
+			  </div>
+			  <!-- new section for payment end -->
 		</div>
         </div>
         <div class="col-lg-12 col-md-12 profile no-mg" style="float:left; width:100%;">
@@ -270,6 +311,7 @@
                 <ul class="nav nav-tabs no-bd-bt" style="display:none;">
                   <li class="active popup"><a data-toggle="tab" href="#home">Chats <strong>({{Config::get('unread_msgs')}})</strong></a></li>
                   <li><a data-toggle="tab" href="#menu1">Chat Groups</a></li>
+				  <li><a data-toggle="tab" href="#menu2">Payments</a></li>
                   @if(!$tutor_globalflag)
                   <li><a href="{{route('tutorRegisterView')}}">Become Tutor</a></li>
                   @endif

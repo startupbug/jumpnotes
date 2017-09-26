@@ -102,7 +102,7 @@ Route::get('/social_shared/{token}', 'HomeController@social_shared')->name('soci
 
   /* Payment Routes */
   Route::get('/tutorPayment', 'PaymentController@index')->name('payment_index');
-  Route::get('/payment_post', 'PaymentController@payment_post')->name('payment_post');
+  Route::post('/payment_post', 'PaymentController@payment_post')->name('payment_post');
 
   Route::get('/getPaymentDone', 'PaymentController@getPaypalPaymentDone')->name('getPaypalPaymentDone');
   Route::get('/getPaymentCancel', 'PaymentController@getPaypalPaymentCancel')->name('getPaypalPaymentCancel');;
@@ -307,4 +307,9 @@ Route::post('tutor/set-schedule/ajax', 'TutorController@tutorSetScheduleAjax')->
 Route::get('tutor/scheduleGet', 'TutorController@arrObj');
 
 Route::post('tutor/submitShedule', 'TutorController@submitShedule')->name('submitShedule');
-Route::post('tutor/bookShedule', 'ProfileController@bookShedule')->name('bookShedule');
+Route::post('tutor/bookShedule', 'TutorController@bookShedule')->name('bookShedule');
+
+
+//Cancel Subscription u 
+Route::get('/cancel_subscription_u/{id}', 'NotesController@cancel_subscription_u')->name('cancel_subscription_u');
+Route::get('/cancel_subscription_t/', 'TutorController@cancel_subscription_t')->name('cancel_subscription_t');

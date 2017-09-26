@@ -23,6 +23,11 @@ use Twilio as Twilio;
 use DB;
 use App\Chat_group;
 use Datatables;
+use Stripe\Stripe;
+use Stripe\Charge;
+use Stripe\Customer;
+use Stripe\Account;
+use Stripe\Subscription;
 
 class TutorController extends Controller
 {
@@ -146,6 +151,67 @@ class TutorController extends Controller
         }else{
             return \Response::json(array('success' => true), 422);
         }
+    }
+
+
+    public function bookShedule(Request $request){
+        $schAr;
+        //dd($request->sch);
+        foreach ($request->sch as $sch) {
+            $schAr[] = explode(",",$sch);
+        }
+
+        foreach ($schAr as $sc) {
+
+           \DB::table('schedule')->where('id',$sc[0])->update(['status' => $sc[1]]);
+        }
+        $user = Auth::user();
+        $booking = new Tutor_booking();
+        $booking->tutor_id = $request->input('tutor_id');
+        $booking->student_id = $user->id;
+        $booking->student_email = $request->input('contact_email');
+        $booking->student_skype = $request->input('contact_skype');
+        $booking->notes_id = 0;
+        $booking->hours_study = $request->hours;
+        if($booking->save()){
+            $tutor_email = Tutor::select('users.email','users.username', 'tutors.tutor_phone')->join('users','users.id','=','tutors.users_id')
+            ->where('tutor_id',$request->input('tutor_id'))->first();
+            Mail::send('emails.bookingRequest', ['tutor'=>$tutor_email->username,'user'=> $user->username,'request' => $request->all()], function ($m) use ($tutor_email) {
+                $m->from('shahzaib.imran.aimviz@gmail.com', 'ROD');
+                $m->to($tutor_email->email)->subject('ROD student request notification');
+            });
+
+            /*  Send SMS Using Twilio */
+            // try {
+                 // Your Account Sid and Auth Token from twilio.com/user/account
+            try {
+             // Your Account Sid and Auth Token from twilio.com/user/account
+            $sid = 'AC3e595b70abb09a692b538d42a798c2d2';
+            $token = '762ec7f9dbbd64b05294a4faa84661a3';
+
+            $client = new \Services_Twilio($sid, $token);
+
+            $message = $client->account->messages->sendMessage(
+                '+15803660904 ',  // From a valid Twilio number
+               $tutor_email->tutor_phone, // Text this number
+                "Hi ".$tutor_email->username." New Lesson Booked!" // message
+            );
+
+              $check = Twilio::message($tutor_email->tutor_phone, "Test Message");
+
+            } catch (\Services_Twilio_RestException $e) {
+                \Response::json(array('success' => true, 'last_insert_id' => $booking->id, 'msg'=>'Your request has been sent you will get notification soon' ), 200);
+            }
+
+
+            // }catch (Exception $e) {
+            //       echo $check;
+            // }
+
+
+        }
+       return redirect()->back()->with('message', 'Your booking has been successful.');
+        
     }
 
     public function book_tutor(Request $request){
@@ -452,6 +518,24 @@ class TutorController extends Controller
         }
        return redirect()->back();
         
+    }
+
+
+    public function cancel_subscription_t(){
+        $sub_id = Tutor::where('users_id', Auth::user()->id)->first();
+        //dd($sub_id->subs_return);
+        Stripe::setApiKey(config('services.stripe.secret'));
+        $sub = \Stripe\Subscription::retrieve($sub_id->subs_return); //Subcribe id on platform admin Account
+        $result = $sub->cancel();
+        //dd($result);
+        if($result->canceled_at){
+            Lesson::where('tutor_id', $sub_id->tutor_id)->delete();
+            Tutor::where('users_id', Auth::user()->id)->delete();
+            return redirect()->back();
+        }
+        else{
+            return redirect()->back();   
+        }
     }
 
 }

@@ -237,10 +237,41 @@ $('table.student tr td div.sch').click(function() {
   $(this).removeClass('blue');
   $(this).removeClass('green');
   $(this).addClass(clas);
+  
   //alert($(this).parent().find("input").val());
 });
+
 $('[data-toggle="tooltip"]').tooltip();
+
 </script>
+<script type="text/javascript">
+$('#menu2').hide();
+$('#menu2button').click(function()
+{
+	$('#menu2').show();
+	$('#menu3').hide();
+}
+);
+$('#menu1button').click(function()
+{
+	$('#menu2').hide();
+	$('#menu3').show();
+}
+);
+$('#home').click(function()
+{
+	$('#menu2').hide();
+	$('#menu3').show();
+}
+);
+$('#submitclickfunction').hide();
+$('#submitclick').click(function()
+{
+	$('#submitclickfunction').show();
+}
+);
+</script>
+
 <style type="text/css">
 .red{background:red;}
 .green{background:green ;}
@@ -252,6 +283,25 @@ table.table.schedule-table{width:60%; margin:auto;}
 .set-schedule input[type="date"]{float:left; width:33%; margin-right:1%;}
 .set-schedule input[type="submit"]{width:32%;}
 .schedule-list{float:left; width:100%;}
+button.stripe-button-el{background-image:none;margin-right:10px; padding:5px 12px; background: #c8e9f7; box-shadow: 0 0 0; border: 0 none;}
+#std_subscription{float:left;}
+button.stripe-button-el span{ line-height:28px; padding:0 0; color: #7b7b7b; font-size:13px; background: #c8e9f7; border: 0 none; box-shadow: 0 0 0; text-transform: uppercase; font-weight: 400; font-family: Montserrat;}
+button.stripe-button-el:hover, button.stripe-button-el:hover span{background: #7b7b7b; color: #fff;}
+button.stripe-button-el span:hover{background: #7b7b7b; color: #fff;}
+.payment-form{width:100%; float:left; margin-bottom:20px;}
+.payment-form input[type="button"]{background: #c8e9f7;
+    border: 0 none;
+    text-transform: uppercase;
+    color: #7b7b7b;
+    border-radius: 4px;
+}
+.payment-form input[type="text"]{min-height:40px;}
+.payment-form input[type="button"]:hover{
+color: rgb(255, 255, 255);
+    background: rgb(123, 123, 123);
+	}
+	.scheduler-ids{width:60%; margin:10px auto 20px auto;}
+	.save-button{text-align:center; margin-bottom:20px;}
 </style>
 
 <script src="{{asset('/public/js/fullcalendar.min.js')}}"></script>

@@ -149,7 +149,7 @@
                 <thead>
                 <tr>
                     <th>Tutor</th>
-                    <th width="18%">Notes</th>
+                    <!-- <th width="18%">Hours</th> -->
                     <th>Price</th>
                     <th>Rate Tutor</th>
                     <th>Payment Status</th>
@@ -162,7 +162,6 @@
                   <tr>
                     <th scope="row">
                         <span class="request-pic"><img src="{{asset('/public/profile_pics/'.$request->profile_pic)}}" width="40px"></span><span class="request-title">{{$request->tutor_unique}}</span></th>
-                    <td>{{$request->note_title}}</td>
                     <td>${{$request->per_hour_charges}}/hour</td>
                     <td>
                         <input type="hidden" name="tutor_id" id="tutor_id" value="{{ceil($request->tutor_rating)}}" />
@@ -178,8 +177,21 @@
                                       @if($request->pay_status)
                               <h4 class="text-center" style="color: #e80000;"><b>Paid</b></h4>
                               @else
-                              <a href="{{ route('payment_post') }}" price = "{{$request->per_hour_charges}}" author_id="{{$request->author_id}}" data-id = "{{$request->id}}" data-toggle="modal" data-target="#myModal" class="btn btn-primary pay" >Send Payment</a>
-                    @endif
+                              <form  method="post" action="{{ route('booking_payment') }}">
+                                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                       data-key="pk_test_W31xNmmJPBpIyyc3LxH89mGi"
+                                       data-amount="<?php echo ($request->per_hour_charges*$request->hours_study)*100 ?>"
+                                       data-name="Booking {{$request->tutor_unique}}"
+                                       data-image="http://site.startupbug.net:6999/rod/rod/public/dynamic_assets/1495873280-j_logo.png"
+                                       data-locale="auto">
+                                    </script>
+                                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                  <input type="hidden" name="tutor_id" value="{{$request->tutor_id}}">
+                                  <input type="hidden" name="boking_id" value="{{$request->id}}">
+                                  <input type="hidden" name="amount" value="<?php echo ($request->per_hour_charges*$request->hours_study)*100 ?>">
+                              </form>
+                              
+                                @endif
                                   </td>
 
                                   <td>{{$request->created_at}}</td>
@@ -312,30 +324,6 @@
             var bookingId = $(this).closest('tr').find('input[name=booking_id]').val();
             console.log("bookingId" + bookingId);
             $("#modal_booking_id").val(bookingId);
-            //var price = $(this).attr('price');
-            //console.log("price" + price);
-            // var url = "{{route('tutorRatting')}}";
-            // $.ajaxSetup({
-            //     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
-            // });
-
-            // $.ajax({
-            //     url: url,// $("#register_form :input[name!=password2]").serializeArray()
-            //     type: 'post', //$('input[name!=password2]', $("#register_form")).serializeArray() //$("#register_form :input[name!=password2][name!=_token]").serializeArray()
-            //     data: {'tutorID': tutorID,'avgRate': avgRatting,'id':requestID},
-            //     cache: true,
-            //     success: function( data ) {
-            //         console.log(data);
-            //         toastr.success('ThankYou for ratting')
-            //         setTimeout(function(){
-            //             location.reload(), 1300});
-            //     },
-            //     error:function( data ) {
-            //         var errors = data.responseJSON;
-            //         toastr.error('Error! Something went wrong');
-            //     }
-            // });
-
         });
 
         $("#tutorRateForm").on('submit', function(e){

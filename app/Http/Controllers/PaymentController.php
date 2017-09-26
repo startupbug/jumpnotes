@@ -11,8 +11,6 @@ use Auth;
 use Redirect;
 use App\Tutor;
 use App\On_trail;
-use Srmklive\PayPal\Services\ExpressCheckout;
-use Srmklive\PayPal\Services\AdaptivePayments;
 use Stripe\Stripe;
 use Stripe\Charge;
 use Stripe\Customer;
@@ -25,17 +23,7 @@ class PaymentController extends Controller
     public function __construct(){
       parent::__construct();
       $this->middleware('auth');
-      $this->_apiContext = Paypal::ApiContext('Ae7ZZW-AvpehkfcJThodJvZoVu5ilr1Mxg1pQIDU2h7dupVG2Lmz_7mr7lO3iewAqfRkyJIVwN0_n3f7',
-          'EKMVlkDsnqHOSDP2Ye8Olho535mvfYXNUinZGYPsu9DzhM8hoCaabk1JTrMfPdIZOcMbyJqXQvnknX1C');
-
-      $this->_apiContext->setConfig(array(
-        'mode' => 'sandbox',
-        'service.EndPoint' => 'https://api.sandbox.paypal.com',
-        'http.ConnectionTimeOut' => 30,
-        'log.LogEnabled' => true,
-        'log.FileName' => storage_path('logs/paypal.log'),
-        'log.LogLevel' => 'FINE'
-      ));
+      
 
    }
 
@@ -85,43 +73,7 @@ $response = $provider->createYearlySubscription($token, $amount, $description);
       ->with('logo_file', $this->logo_file);
     }
 
-    public function payment_post(){
-
-             /*$payer = PayPal::Payer();
-             $payer->setPaymentMethod('paypal');
-
-             $itemItemPrice = 3.99;
-             $item = PayPal::Item();
-             $item->setQuantity(1);
-             $item->setName('Tutor Month Plan ');
-             $item->setPrice($itemItemPrice);
-             $item->setCurrency('USD');
-
-             $itemList = PayPal::ItemList();
-             $itemList->setItems(array($item));
-
-             $totalAmount = 3.99;
-             $amount = PayPal::Amount();
-             $amount->setCurrency('USD');
-             $amount->setTotal($totalAmount);
-
-             $transaction = PayPal::Transaction();
-             $transaction->setAmount($amount);
-             $transaction->setItemList($itemList);
-             $transaction->setDescription('Tutor Monthly Plan');
-
-             $redirectUrls = PayPal:: RedirectUrls();
-             $redirectUrls->setReturnUrl(action('PaymentController@getPaypalPaymentDone'));
-             $redirectUrls->setCancelUrl(action('PaymentController@getPaypalPaymentCancel'));
-
-             $payment = PayPal::Payment();
-             $payment->setIntent('sale');
-             $payment->setPayer($payer);
-             $payment->setRedirectUrls($redirectUrls);
-             $payment->setTransactions(array($transaction));
-
-             $response = $payment->create($this->_apiContext);
-             $redirectUrl = $response->links[1]->href;*/
+    public function payment_post(Request $request){
 
              \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
@@ -137,19 +89,37 @@ $response = $provider->createYearlySubscription($token, $amount, $description);
                 "customer" => $customer_id,
                 "items" => array(
                   array(
-                    "plan" => "rod-plan",
+                    "plan" => "tutorSubscription",
                   ),
                 )
               ));
 
-              dd($subcription);
+              if($subcription->id){
+                  $request->session()->flash('payment_success', 'Tutor Succesfully Payed!');
+                  /* Updating Tutor Table */
+                  $tutor_update = Tutor::where('users_id', Auth::user()->id)->update(['is_paid' => 1, 'subs_return' => $subcription->id]);
+                  $tutor_update = Tutor::where('users_id', Auth::user()->id)->update(['expiry_date' => Carbon::now()->addYear() ]);
+                  $tutor_update = On_trail::where('user_id', Auth::user()->id)->delete();
+
+                  if(!$tutor_update){
+                      $request->session()->flash('payment_danger', 'Tutor Succesfully Payed!');
+                      return Redirect::route('payment_index');
+                  }
+
+                return Redirect::route('profile_index');
+             }else{
+                  $request->session()->flash('payment_tab_cancel', 'Tutor Payment Cancelled!');
+                  return Redirect::route('payment_index');
+             }
+
+              /*dd($subcription);
 
              return Redirect::to( $redirectUrl );
 
     	       return view('dashboard.payment.index')
              ->with('your_note_count', $this->your_note_count)
              ->with('logo_file', $this->logo_file);
-             ;
+             ;*/
     }
 
     public function getPaypalPaymentDone(Request $request){
@@ -189,30 +159,6 @@ $response = $provider->createYearlySubscription($token, $amount, $description);
            	    $request->session()->flash('payment_danger', 'Tutor Succesfully Payed!');
            		return Redirect::route('profile_index');
            }
-      /*   if($executePayment){
-             if(session('paymentTab_prop_id')){
-                 $prop_id = session('paymentTab_prop_id');
-                 $property_bought = Propertie::find($prop_id);
-                 $property_bought->is_paid = 1;
-                 //$property_bought->transaction_id = $id;
-                 if($property_bought->update()){
-                     \Session::forget('paymentTab_prop_id');
-                     $request->session()->flash('payment_tab_success', 'Tutor Succesfully Payed!');
-                     return Redirect::route('payment_index');
-                 }else{
-                     $request->session()->flash('payment_tab_error', 'TutorCouldnot be Bought!');
-                     return Redirect::route('payment_index');
-                 }
-             }else{
-               $request->session()->flash('payment_tab_error', 'Tutor Couldnot be Bought!');
-               return Redirect::route('payment_index');
-             }
-
-         }else{
-           $request->session()->flash('payment_tab_error', 'TutorCouldnot be Bought!');
-           return Redirect::route('payment_index');
-         } */
-
     }
 
     public function getPaypalPaymentCancel(Request $request){

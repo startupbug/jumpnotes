@@ -504,16 +504,34 @@ class NotesController extends Controller
                 'std_id' => Auth::user()->id,
                 'author_id' => $request->author_id,
                 'expiry_date' => '',
-                'subs_return' => $subscription
+                'subs_return' => $subscription->id
             ]);
-            return redirect()->back()->with('status', 'Subscription Successful.');;
+            return redirect()->back()->with('status', 'Subscription Successful.');
         }
         else{
-            return redirect()->back()->with('failed', 'Subscription failed.');;   
+            return redirect()->back()->with('failed', 'Subscription failed.');   
         }
         //$status = \Stripe\Subscription::retrieve($subscription->id);
         //dd($subscription);
 
+    }
+    public function cancel_subscription_u($id){
+        $sub_id = Std_subscription::where([['std_id', '=', Auth::user()->id], ['author_id', '=', $id]])->select('subs_return')->first();
+        //dd($sub_id->subs_return);
+        Stripe::setApiKey(config('services.stripe.secret'));
+        $sub = \Stripe\Subscription::retrieve(array(
+          "id" => $sub_id->subs_return //Subcribe id on tutors connected Account
+        ), array("stripe_account" => 'acct_1B1re5By5xtIUy1A')); //Tutor Connected Account Id
+        $result_u = $sub->cancel();
+        //dd($result_u);
+        if($result_u->canceled_at){
+            $subs_cancel =Std_subscription::where([['std_id', '=', Auth::user()->id], ['author_id', '=', $id]])->delete();
+            return redirect()->back()->with('status', 'Subscription Successfully cancel.');
+
+        }
+        else{
+            return redirect()->back()->with('failed', 'Subscription cancelation failed. please try again');   
+        }
     }
 
     public function notecomment(Request $request){

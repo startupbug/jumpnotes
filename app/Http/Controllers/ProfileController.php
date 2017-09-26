@@ -243,18 +243,6 @@ class ProfileController extends Controller
         }
     }
 
-    public function bookShedule(Request $request){
-        $schAr;
-        //dd($sch);
-        foreach ($request->sch as $sch) {
-            $schAr[] = explode(",",$sch);
-        }
-        foreach ($schAr as $sc) {
-
-            \DB::table('schedule')->where('id',$sc[0])->update(['status' => $sc[1]]);
-        }
-       return redirect()->back();
-        
-    }
+    
 
 }

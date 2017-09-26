@@ -19,7 +19,11 @@ use App\Tutor_earning;
 use App\Aboutus_main;
 use App\Aboutus_team;
 use App\Aboutus_testimonial;
-
+use Stripe\Stripe;
+use Stripe\Charge;
+use Stripe\Customer;
+use Stripe\Account;
+use Stripe\Subscription;
 class DashboardController extends Controller
 {
 
@@ -120,7 +124,7 @@ function($tutors){
     public function booking_requests(){
         $user = Auth::user();
         $data['requests'] = Tutor_booking::join('tutors','tutors.tutor_id','=','tutor_bookings.tutor_id')
-            ->join('notes','notes.notes_id','=','tutor_bookings.notes_id')
+            //->join('notes','notes.notes_id','=','tutor_bookings.notes_id')
             ->where('tutor_bookings.student_id',$user->id)
             ->orderBy('tutor_bookings.id', 'desc')
              ->paginate(10);
@@ -199,7 +203,44 @@ function($tutors){
 
     /* Booking Request Payment */
     public function book_payment(Request $request){
-        $booking_id = $request->input('id');
+
+        Stripe::setApiKey(config('services.stripe.secret'));
+        $connected_account = \Stripe\Account::retrieve("acct_1B1re5By5xtIUy1A"); 
+        $account_id = $connected_account->id;
+
+        $fee = ($request->amount*0.20)
+        //dd($request->all());
+        $charge = \Stripe\Charge::create(array(
+          "amount" => $request->amount,
+          "currency" => "usd",
+          "source" => "tok_visa",
+          "application_fee" => $fee,
+        ), array("stripe_account" => $account_id));
+        //print_r($charge);
+
+        if($charge){
+            //$request->session()->flash('payment_success', 'Tutor Succesfully Payed!');
+            /* Updating Tutor Table */
+            //$booking_id = \Session::get('cur_booking_id');
+            $booking_update = Tutor_booking::where('id', $request->boking_id)->update(['pay_status' => 1]);
+            
+            //dd($booking_update);
+            /* $tutor_update = Tutor::where('users_id', Auth::user()->id)->update(['expiry_date' => Carbon::now()->addMonth() ]);
+            $tutor_update = On_trail::where('user_id', Auth::user()->id)->delete();
+            \Session::forget('cur_booking_id'); */
+            if(!$booking_update){
+                $request->session()->flash('payment_danger', 'Tutor Succesfully Payed!');
+                return Redirect::route('requestsView');
+            }
+
+            return Redirect::route('requestsView');
+        }else{
+            $request->session()->flash('payment_danger', 'Tutor Succesfully Payed!');
+            return Redirect::route('requestsView');
+        }
+
+
+        /*$booking_id = $request->input('id');
         //dd($booking_id);
          //Setting Session
         $request->session()->flash('cur_booking_id', $booking_id);
@@ -214,7 +255,6 @@ function($tutors){
         $final_price = $user_hours*$per_hour_charges;
         //dd($final_price);
 
-        /* Paypal Payment Code */
         $payer = PayPal::Payer();
         $payer->setPaymentMethod('paypal');
 
@@ -249,7 +289,7 @@ function($tutors){
         $payment->setTransactions(array($transaction));
 
         $response = $payment->create($this->_apiContext);
-        $redirectUrl = $response->links[1]->href;
+        $redirectUrl = $response->links[1]->href;*/
 
         return Redirect::to( $redirectUrl );
 

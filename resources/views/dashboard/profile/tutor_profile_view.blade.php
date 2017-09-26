@@ -155,7 +155,7 @@ toastr.success('{{Session::get('payment_success')}}');
 				@if($tutor->users_id != Auth::user()->id)
                       @if(!$subscription_check)
                       <!-- <a href="#download_payment" data-toggle="modal" data-target="#download_payment" class="btn btn-default btn-lg subscribe edit-button new-edit edits free-trial subscribed-button edit-profile">Subscribe</a> -->
-                      <div class="btn btn-default btn-lg subscribe">
+                      
                         <form id="std_subscription" method="post" action="{{route('download_payment')}}" role="form">
                             <input type="hidden" value="{{csrf_token()}}" name="_token"/>
                             <input type="hidden" name="author_id" class="tutor_id" value="{{$tutor->users_id}}"/>
@@ -168,15 +168,15 @@ toastr.success('{{Session::get('payment_success')}}');
                                data-locale="auto">
                             </script>
                         </form>
-                      </div>
+                      
                       @else
-                      <a class="btn btn-default btn-lg subscribe edit-button new-edit edits free-trial subscribed-button edit-profile" disabled>Subscribed</a>
+                      <a class="btn btn-default btn-lg subscribe edit-button new-edit edits free-trial subscribed-button edit-profile" href="{{route('cancel_subscription_u', ['id' => $tutor->users_id]) }}">Unsubscribed</a>
                       @endif
                     @endif
 
 				<a href="{{ route('editprofile_index') }}" class="btn btn-primary btn-md edit-button new-edit edit-profile" style="display:none;">Book Now</a>
 
-				<!-------------------------->
+				
                 @if(isset($tutor->intro_video_link) && $tutor->intro_video_link!=Null)
 
                 <a href="#" class="btn btn-default btn-lg btn-md watch-intro free-trial" data-toggle="modal" data-target="#watchVideo">Watch My Introduction</a> @else
@@ -251,7 +251,21 @@ section.button_info .avl span{
   <label class="avl">Available<span></span></label>
   </section>
           <form method="post" action="{{route('bookShedule')}}" class="schedule-list">    
+             
+              <div class="clearfix"></div>
               <div class="table-responsive">
+                 <div class="form-group row scheduler-ids">
+                  <div class="col-md-4">
+                    <input type="text" name="contact_email" class="form-control" placeholder="Email ID" required="">
+                  </div>
+                  <div class="col-md-4">
+                    <input type="text" name="contact_skype" class="form-control" placeholder="Skype ID" required="">
+                  </div>
+                  <div class="col-md-4">
+                    <input type="text" name="hours" class="form-control" placeholder="Number of hours" required="">
+                  </div>
+                  <input type="hidden" name="tutor_id" value="{{$tutor->tutor_id}}">
+                </div>
                   <table class="table schedule-table student">
                       <tr>
                           <?php 
@@ -285,7 +299,7 @@ section.button_info .avl span{
                   </table>
               <div style="width:60%; margin:auto;">{{ $schedule->links() }}</div>
               </div>
-              <div class="row">
+              <div class="row save-button">
               <!-- <input type="hidden" name="_token" value="{{csrf_token()}}"> -->
               {!! csrf_field() !!}
               <button type="submit" class="btn btn-primary edits">Save</button>
